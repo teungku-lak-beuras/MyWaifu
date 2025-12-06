@@ -1,5 +1,6 @@
 package heaven.from.mywaifu.ui.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -17,6 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -25,6 +27,77 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import heaven.from.mywaifu.R
+
+private val shape = RoundedCornerShape(
+    bottomStart = 32.dp,
+    bottomEnd = 32.dp,
+)
+
+@Composable
+fun MyWaifuTopAppBar(
+    title: String,
+    popCallback: () -> Unit,
+    notificationCallback: () -> Unit,
+) {
+    Surface(
+        modifier = Modifier
+            .height(96.dp)
+            .fillMaxWidth()
+            .clip(shape),
+        color = MaterialTheme.colorScheme.secondaryContainer
+    ) {
+        Column(
+            modifier = Modifier.padding(
+                top = 16.dp,
+                bottom = 16.dp
+            ),
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Surface(
+                    modifier = Modifier
+                        .padding(start = 16.dp)
+                        .size(64.dp)
+                        .clip(
+                            RoundedCornerShape(16.dp)
+                        )
+                        .clickable(onClick = popCallback),
+                    color = MaterialTheme.colorScheme.surface
+                ) {
+                    Icon(
+                        modifier = Modifier.padding(16.dp),
+                        contentDescription = "Notifications",
+                        painter = painterResource(R.drawable.arrow_left)
+                    )
+
+                }
+                Text(
+                    style = MaterialTheme.typography.titleLarge,
+                    text = title
+                )
+                Surface(
+                    modifier = Modifier
+                        .padding(end = 16.dp)
+                        .size(64.dp)
+                        .clip(
+                            RoundedCornerShape(16.dp)
+                        )
+                        .clickable(onClick = notificationCallback),
+                    color = MaterialTheme.colorScheme.surface
+                ) {
+                    Icon(
+                        modifier = Modifier.padding(16.dp),
+                        contentDescription = "Notifications",
+                        painter = painterResource(R.drawable.bell)
+                    )
+                }
+            }
+        }
+    }
+}
 
 @Composable
 fun MyWaifuTopAppBar(
@@ -37,12 +110,7 @@ fun MyWaifuTopAppBar(
         modifier = Modifier
             .height(176.dp)
             .fillMaxWidth()
-            .clip(
-                RoundedCornerShape(
-                    bottomStart = 32.dp,
-                    bottomEnd = 32.dp,
-                )
-            ),
+            .clip(shape),
         color = MaterialTheme.colorScheme.secondaryContainer
     ) {
         Column(
@@ -62,11 +130,11 @@ fun MyWaifuTopAppBar(
                 ) {
                     Text(
                         style = MaterialTheme.typography.titleSmall,
-                        text = "Welcome,"
+                        text = "${stringResource(R.string.welcome)},"
                     )
                     Text(
                         style = MaterialTheme.typography.titleLarge,
-                        text = stringResource(R.string.app_name)
+                        text = title
                     )
                 }
                 Surface(
@@ -75,7 +143,8 @@ fun MyWaifuTopAppBar(
                         .size(64.dp)
                         .clip(
                             RoundedCornerShape(16.dp)
-                        ),
+                        )
+                        .clickable(onClick = notificationCallback),
                     color = MaterialTheme.colorScheme.surface
                 ) {
                     Icon(
@@ -91,7 +160,8 @@ fun MyWaifuTopAppBar(
                         .size(64.dp)
                         .clip(
                             RoundedCornerShape(16.dp)
-                        ),
+                        )
+                        .clickable(onClick = settingsCallback),
                     color = MaterialTheme.colorScheme.surface
                 ) {
                     Icon(
@@ -105,6 +175,7 @@ fun MyWaifuTopAppBar(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
+                // We will add this search input callback last!
                 TextField(
                     modifier = Modifier
                         .padding(16.dp)
@@ -140,9 +211,19 @@ fun MyWaifuTopAppBar(
 @Composable
 fun MyWaifuTopAppBarPreview1() {
     MyWaifuTopAppBar(
-        title = "Example title string",
+        title = "Administrator",
         notificationCallback = {},
         settingsCallback = {},
         searchCallback = {}
+    )
+}
+
+@Preview
+@Composable
+fun MyWaifuTopAppBarPreview2() {
+    MyWaifuTopAppBar(
+        title = "Detail page",
+        popCallback = {},
+        notificationCallback = {}
     )
 }

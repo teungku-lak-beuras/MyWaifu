@@ -22,6 +22,11 @@ class MainActivity : ComponentActivity() {
                         settingsCallback = {},
                         searchCallback = { text -> }
                     )
+                    MyWaifuTopAppBar(
+                        title = stringResource(R.string.app_name),
+                        popCallback = {},
+                        notificationCallback = {}
+                    )
                 }
             }
         }
