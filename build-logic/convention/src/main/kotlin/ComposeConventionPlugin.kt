@@ -22,6 +22,8 @@ class ComposeConventionPlugin : Plugin<Project> {
             }
 
             dependencies {
+                add("implementation", libs.findLibrary("androidx-material3").get())
+
                 add("implementation", libs.findLibrary("androidx-activity-compose").get())
                 add("implementation", platform(libs.findLibrary("androidx-compose-bom").get()))
                 add("androidTestImplementation", platform(libs.findLibrary("androidx-compose-bom").get()))
@@ -31,7 +33,9 @@ class ComposeConventionPlugin : Plugin<Project> {
                 add("implementation", libs.findLibrary("androidx-compose-ui").get())
                 add("implementation", libs.findLibrary("androidx-compose-ui-graphics").get())
                 add("implementation", libs.findLibrary("androidx-compose-ui-tooling-preview").get())
+                add("implementation", libs.findLibrary("androidx-compose-ui-text").get())
                 add("implementation", libs.findLibrary("androidx-compose-material3").get())
+                add("implementation", libs.findLibrary("androidx-compose-material3-window-size-class1").get())
                 add("debugImplementation", libs.findLibrary("androidx-compose-ui-tooling").get())
                 add("debugImplementation", libs.findLibrary("androidx-compose-ui-test-manifest").get())
             }
