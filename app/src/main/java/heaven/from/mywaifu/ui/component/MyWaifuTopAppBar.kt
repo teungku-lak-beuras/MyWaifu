@@ -1,4 +1,4 @@
-package heaven.from.mywaifu.ui.components
+package heaven.from.mywaifu.ui.component
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
