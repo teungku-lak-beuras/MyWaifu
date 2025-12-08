@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.heaven.from.android.application)
     alias(libs.plugins.heaven.from.compose)
+    alias(libs.plugins.heaven.from.hilt)
     alias(libs.plugins.heaven.from.kotlin.serialization)
 }
 

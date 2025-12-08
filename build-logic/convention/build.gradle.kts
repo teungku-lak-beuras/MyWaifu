@@ -36,6 +36,10 @@ gradlePlugin {
             id = "heaven.from.compose"
             implementationClass = "ComposeConventionPlugin"
         }
+        register("HiltConventionPlugin") {
+            id = "heaven.from.hilt"
+            implementationClass = "HiltConventionPlugin"
+        }
         register("KotlinSerializationConventionPlugin") {
             id = "heaven.from.kotlin.serialization"
             implementationClass = "KotlinSerializationConventionPlugin"
