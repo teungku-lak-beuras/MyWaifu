@@ -23,6 +23,9 @@ class ComposeConventionPlugin : Plugin<Project> {
 
             dependencies {
                 add("implementation", libs.findLibrary("androidx-material3").get())
+                add("implementation", libs.findLibrary("androidx-navigation3-runtime").get())
+                add("implementation", libs.findLibrary("androidx-navigation3-ui").get())
+                add("implementation", libs.findLibrary("androidx-lifecycle-viewmodel-navigation3").get())
 
                 add("implementation", libs.findLibrary("androidx-activity-compose").get())
                 add("implementation", platform(libs.findLibrary("androidx-compose-bom").get()))

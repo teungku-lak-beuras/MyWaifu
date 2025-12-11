@@ -1,4 +1,4 @@
-package heaven.from.mywaifu
+package heaven.from.mywaifu.ui.view_model
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -8,7 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel
+class HomeViewModel
 @Inject
 constructor() : ViewModel() {
     var helloWorld by mutableStateOf("NICEEE!!! :)))))"); private set
