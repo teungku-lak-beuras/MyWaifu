@@ -65,7 +65,6 @@ fun MyWaifuScaffoldPreview1() {
             MyWaifuTopAppBar(
                 title = "Administrator",
                 notificationCallback = {},
-                settingsCallback = {},
                 searchCallback = {}
             )
         },

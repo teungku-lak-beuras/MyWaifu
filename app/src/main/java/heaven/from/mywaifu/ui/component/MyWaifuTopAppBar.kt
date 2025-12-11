@@ -34,10 +34,29 @@ private val shape = RoundedCornerShape(
 )
 
 @Composable
+fun MyWaifuTopAppBarMenu(
+    modifier: Modifier = Modifier,
+    onClickCallback: () -> Unit,
+    content: @Composable () -> Unit
+) {
+    Surface(
+        modifier = modifier
+            .size(64.dp)
+            .clip(
+                RoundedCornerShape(16.dp)
+            )
+            .clickable(onClick = onClickCallback),
+        color = MaterialTheme.colorScheme.surface
+    ) {
+        content.invoke()
+    }
+}
+
+@Composable
 fun MyWaifuTopAppBar(
     title: String,
     popCallback: () -> Unit,
-    notificationCallback: () -> Unit,
+    burgerCallback: () -> Unit,
 ) {
     Surface(
         modifier = Modifier
@@ -57,36 +76,23 @@ fun MyWaifuTopAppBar(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Surface(
-                    modifier = Modifier
-                        .padding(start = 16.dp)
-                        .size(64.dp)
-                        .clip(
-                            RoundedCornerShape(16.dp)
-                        )
-                        .clickable(onClick = popCallback),
-                    color = MaterialTheme.colorScheme.surface
+                MyWaifuTopAppBarMenu(
+                    modifier = Modifier.padding(start = 16.dp),
+                    onClickCallback = popCallback
                 ) {
                     Icon(
                         modifier = Modifier.padding(16.dp),
                         contentDescription = "Notifications",
                         painter = painterResource(R.drawable.arrow_small_left)
                     )
-
                 }
                 Text(
                     style = MaterialTheme.typography.titleLarge,
                     text = title
                 )
-                Surface(
-                    modifier = Modifier
-                        .padding(end = 16.dp)
-                        .size(64.dp)
-                        .clip(
-                            RoundedCornerShape(16.dp)
-                        )
-                        .clickable(onClick = notificationCallback),
-                    color = MaterialTheme.colorScheme.surface
+                MyWaifuTopAppBarMenu(
+                    modifier = Modifier.padding(end = 16.dp),
+                    onClickCallback = burgerCallback
                 ) {
                     Icon(
                         modifier = Modifier.padding(16.dp),
@@ -103,8 +109,8 @@ fun MyWaifuTopAppBar(
 fun MyWaifuTopAppBar(
     title: String,
     notificationCallback: () -> Unit,
-    settingsCallback: () -> Unit,
-    searchCallback: (String) -> Unit
+    searchCallback: (String) -> Unit,
+    burgerContent: @Composable () -> Unit = {}
 ) {
     Surface(
         modifier = Modifier
@@ -137,39 +143,17 @@ fun MyWaifuTopAppBar(
                         text = title
                     )
                 }
-                Surface(
-                    modifier = Modifier
-                        .padding(end = 16.dp)
-                        .size(64.dp)
-                        .clip(
-                            RoundedCornerShape(16.dp)
-                        )
-                        .clickable(onClick = notificationCallback),
-                    color = MaterialTheme.colorScheme.surface
+                MyWaifuTopAppBarMenu(
+                    modifier = Modifier.padding(end = 16.dp),
+                    onClickCallback = notificationCallback
                 ) {
                     Icon(
                         modifier = Modifier.padding(16.dp),
                         contentDescription = "Notifications",
                         painter = painterResource(R.drawable.bell)
                     )
-
                 }
-                Surface(
-                    modifier = Modifier
-                        .padding(end = 16.dp)
-                        .size(64.dp)
-                        .clip(
-                            RoundedCornerShape(16.dp)
-                        )
-                        .clickable(onClick = settingsCallback),
-                    color = MaterialTheme.colorScheme.surface
-                ) {
-                    Icon(
-                        modifier = Modifier.padding(16.dp),
-                        contentDescription = "Settings",
-                        painter = painterResource(R.drawable.menu_burger)
-                    )
-                }
+                burgerContent.invoke()
             }
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -214,7 +198,6 @@ fun MyWaifuTopAppBarPreview1() {
     MyWaifuTopAppBar(
         title = "Administrator",
         notificationCallback = {},
-        settingsCallback = {},
         searchCallback = {}
     )
 }
@@ -225,6 +208,6 @@ fun MyWaifuTopAppBarPreview2() {
     MyWaifuTopAppBar(
         title = "Detail page",
         popCallback = {},
-        notificationCallback = {}
+        burgerCallback = {}
     )
 }
