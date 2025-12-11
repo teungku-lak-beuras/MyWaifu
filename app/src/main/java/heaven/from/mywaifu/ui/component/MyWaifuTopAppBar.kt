@@ -70,7 +70,7 @@ fun MyWaifuTopAppBar(
                     Icon(
                         modifier = Modifier.padding(16.dp),
                         contentDescription = "Notifications",
-                        painter = painterResource(R.drawable.arrow_left)
+                        painter = painterResource(R.drawable.arrow_small_left)
                     )
 
                 }
@@ -190,8 +190,9 @@ fun MyWaifuTopAppBar(
                         focusedContainerColor = MaterialTheme.colorScheme.surface,
                         unfocusedContainerColor = MaterialTheme.colorScheme.surface
                     ),
-                    leadingIcon = {
+                    trailingIcon = {
                         Icon(
+                            modifier = Modifier.padding(16.dp),
                             contentDescription = "Search",
                             painter = painterResource(R.drawable.search)
                         )
