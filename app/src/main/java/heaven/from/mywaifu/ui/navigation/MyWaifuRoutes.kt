@@ -4,7 +4,7 @@ import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
 
 @Serializable
-sealed interface Routes : NavKey {
+sealed interface MyWaifuRoutes : NavKey {
     @Serializable
-    data object HomeScreen : Routes, NavKey
+    data object HomeScreen : MyWaifuRoutes, NavKey
 }

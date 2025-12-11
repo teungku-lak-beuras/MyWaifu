@@ -18,11 +18,11 @@ fun MyWaifuRoot() {
         configuration = SavedStateConfiguration {
             serializersModule = SerializersModule {
                 polymorphic(NavKey::class) {
-                    subclass(Routes.HomeScreen::class, Routes.HomeScreen.serializer())
+                    subclass(MyWaifuRoutes.HomeScreen::class, MyWaifuRoutes.HomeScreen.serializer())
                 }
             }
         },
-        Routes.HomeScreen
+        MyWaifuRoutes.HomeScreen
     )
 
     NavDisplay(
@@ -33,7 +33,7 @@ fun MyWaifuRoot() {
         ),
         entryProvider = { key ->
             when (key) {
-                is Routes.HomeScreen -> {
+                is MyWaifuRoutes.HomeScreen -> {
                     NavEntry(key) {
                         HomeScreen()
                     }
