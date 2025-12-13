@@ -27,7 +27,14 @@ fun MyWaifuRoot() {
         configuration = SavedStateConfiguration {
             serializersModule = SerializersModule {
                 polymorphic(NavKey::class) {
-                    subclass(MyWaifuRoutes.HomeScreen::class, MyWaifuRoutes.HomeScreen.serializer())
+                    subclass(
+                        MyWaifuRoutes.HomeScreen::class,
+                        MyWaifuRoutes.HomeScreen.serializer()
+                    )
+                    subclass(
+                        MyWaifuRoutes.HelpScreen::class,
+                        MyWaifuRoutes.HelpScreen.serializer()
+                    )
                 }
             }
         },
