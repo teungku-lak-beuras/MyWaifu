@@ -56,7 +56,7 @@ fun MyWaifuTopAppBarMenu(
 fun MyWaifuTopAppBar(
     title: String,
     popCallback: () -> Unit,
-    burgerCallback: () -> Unit,
+    notificationCallback: () -> Unit,
 ) {
     Surface(
         modifier = Modifier
@@ -92,7 +92,7 @@ fun MyWaifuTopAppBar(
                 )
                 MyWaifuTopAppBarMenu(
                     modifier = Modifier.padding(end = 16.dp),
-                    onClickCallback = burgerCallback
+                    onClickCallback = notificationCallback
                 ) {
                     Icon(
                         modifier = Modifier.padding(16.dp),
@@ -208,6 +208,6 @@ fun MyWaifuTopAppBarPreview2() {
     MyWaifuTopAppBar(
         title = "Detail page",
         popCallback = {},
-        burgerCallback = {}
+        notificationCallback = {}
     )
 }

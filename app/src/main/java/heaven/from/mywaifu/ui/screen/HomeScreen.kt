@@ -89,13 +89,14 @@ fun Dropdown(
                     text = stringResource(R.string.about)
                 )
             },
-            onClick = helpCallback
+            onClick = settingsCallback
         )
     }
 }
 
 @Composable
 fun HomeScreen(
+    helpCallback: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     var dropdownExpanded by remember { mutableStateOf(false) }
@@ -121,7 +122,7 @@ fun HomeScreen(
                         Dropdown(
                             expanded = dropdownExpanded,
                             onDismisRequest = { dropdownExpanded = false },
-                            helpCallback = {},
+                            helpCallback = helpCallback,
                             settingsCallback = {},
                             aboutCallback = {}
                         )
@@ -140,5 +141,7 @@ fun HomeScreen(
 @Preview
 @Composable
 fun HomeScreenPreview1() {
-    HomeScreen()
+    HomeScreen(
+        helpCallback = {}
+    )
 }
