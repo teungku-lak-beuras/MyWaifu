@@ -11,13 +11,13 @@ import heaven.from.mywaifu.ui.component.MyWaifuTopAppBar
 import heaven.from.mywaifu.ui.layout.MyWaifuScaffold
 
 @Composable
-fun HelpScreen(
+fun AboutScreen(
     popCallback: () -> Unit
 ) {
     MyWaifuScaffold(
         topAppBar = {
             MyWaifuTopAppBar(
-                title = stringResource(R.string.help),
+                title = stringResource(R.string.about),
                 popCallback = popCallback,
                 notificationCallback = {}
             )
@@ -25,15 +25,15 @@ fun HelpScreen(
     ) { paddingValues ->
         Text(
             modifier = Modifier.padding(paddingValues),
-            text = "Help screen is under construction :)"
+            text = "About screen is under construction :)"
         )
     }
 }
 
 @Preview
 @Composable
-fun HelpScreenPreview1() {
-    HelpScreen(
+fun AboutScreenPreview1() {
+    AboutScreen(
         popCallback = {}
     )
 }

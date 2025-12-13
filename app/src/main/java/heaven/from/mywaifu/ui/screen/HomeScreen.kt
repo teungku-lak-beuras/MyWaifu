@@ -73,7 +73,7 @@ fun Dropdown(
                     text = stringResource(R.string.settings)
                 )
             },
-            onClick = helpCallback
+            onClick = settingsCallback
         )
         HorizontalDivider()
         DropdownMenuItem(
@@ -89,7 +89,7 @@ fun Dropdown(
                     text = stringResource(R.string.about)
                 )
             },
-            onClick = settingsCallback
+            onClick = aboutCallback
         )
     }
 }
@@ -97,6 +97,8 @@ fun Dropdown(
 @Composable
 fun HomeScreen(
     helpCallback: () -> Unit,
+    settingsCallback: () -> Unit,
+    aboutCallback: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     var dropdownExpanded by remember { mutableStateOf(false) }
@@ -123,8 +125,8 @@ fun HomeScreen(
                             expanded = dropdownExpanded,
                             onDismisRequest = { dropdownExpanded = false },
                             helpCallback = helpCallback,
-                            settingsCallback = {},
-                            aboutCallback = {}
+                            settingsCallback = settingsCallback,
+                            aboutCallback = aboutCallback
                         )
                     }
                 }
@@ -142,6 +144,8 @@ fun HomeScreen(
 @Composable
 fun HomeScreenPreview1() {
     HomeScreen(
-        helpCallback = {}
+        helpCallback = {},
+        settingsCallback = {},
+        aboutCallback = {}
     )
 }

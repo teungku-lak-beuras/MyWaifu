@@ -10,4 +10,10 @@ sealed interface MyWaifuRoutes : NavKey {
 
     @Serializable
     data object HelpScreen : MyWaifuRoutes, NavKey
+
+    @Serializable
+    data object SettingsScreen : MyWaifuRoutes, NavKey
+
+    @Serializable
+    data object AboutScreen : MyWaifuRoutes, NavKey
 }
