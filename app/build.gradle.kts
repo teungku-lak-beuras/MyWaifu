@@ -34,3 +34,7 @@ android {
         }
     }
 }
+
+dependencies {
+    implementation(project(":core:repository"))
+}

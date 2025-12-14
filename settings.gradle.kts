@@ -25,3 +25,7 @@ dependencyResolutionManagement {
 rootProject.name = "My Waifu"
 
 include(":app")
+include(":core:local")
+include(":core:model")
+include(":core:network")
+include(":core:repository")
