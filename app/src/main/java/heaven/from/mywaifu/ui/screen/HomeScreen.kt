@@ -1,6 +1,10 @@
 package heaven.from.mywaifu.ui.screen
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.DropdownMenu
@@ -14,6 +18,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -95,6 +100,34 @@ fun Dropdown(
 }
 
 @Composable
+fun LoadingItem() {
+    Image(
+        modifier = Modifier.size(72.dp),
+        contentDescription = stringResource(R.string.loading),
+        painter = painterResource(R.drawable.picture)
+    )
+    Text(
+        modifier = Modifier.padding(8.dp),
+        style = MaterialTheme.typography.bodyLarge,
+        text = stringResource(R.string.loading)
+    )
+}
+
+@Composable
+fun ErrorItem() {
+    Image(
+        modifier = Modifier.size(72.dp),
+        contentDescription = stringResource(R.string.error),
+        painter = painterResource(R.drawable.error_bug)
+    )
+    Text(
+        modifier = Modifier.padding(8.dp),
+        style = MaterialTheme.typography.bodyLarge,
+        text = stringResource(R.string.error)
+    )
+}
+
+@Composable
 fun HomeScreen(
     helpCallback: () -> Unit,
     settingsCallback: () -> Unit,
@@ -133,10 +166,16 @@ fun HomeScreen(
             )
         }
     ) { paddingValues ->
-        Text(
-            modifier = Modifier.padding(paddingValues),
-            text = viewModel.helloWorld
-        )
+        Column(
+            modifier = Modifier
+                .padding(paddingValues)
+                .padding(16.dp)
+                .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            ErrorItem()
+        }
     }
 }
 
