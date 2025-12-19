@@ -44,5 +44,9 @@ gradlePlugin {
             id = "heaven.from.kotlin.serialization"
             implementationClass = "KotlinSerializationConventionPlugin"
         }
+        register("KtorConventionPlugin") {
+            id = "heaven.from.ktor"
+            implementationClass = "KtorConventionPlugin"
+        }
     }
 }
