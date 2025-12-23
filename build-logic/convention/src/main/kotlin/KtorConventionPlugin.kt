@@ -10,6 +10,7 @@ class KtorConventionPlugin : Plugin<Project> {
             val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
 
             dependencies {
+                add("implementation", platform(libs.findLibrary("ktor-bom").get()))
                 add("implementation", libs.findLibrary("ktor-client-core").get())
                 add("implementation", libs.findLibrary("ktor-client-cio").get())
                 add("implementation", libs.findLibrary("ktor-client-logging").get())
