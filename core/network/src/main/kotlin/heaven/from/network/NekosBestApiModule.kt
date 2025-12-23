@@ -1,3 +1,4 @@
+package heaven.from.network
 
 import dagger.Module
 import dagger.Provides

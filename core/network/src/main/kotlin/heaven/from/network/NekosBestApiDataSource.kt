@@ -1,3 +1,5 @@
+package heaven.from.network
+
 import heaven.from.core.network.BuildConfig
 
 class NekosBestApiDataSource {

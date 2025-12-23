@@ -1,6 +1,7 @@
 [versions]
 activityCompose = "1.12.1"
 agp = "8.13.2"
+coil = "3.3.0"
 composeBom = "2024.09.00"
 coreKtx = "1.17.0"
 espressoCore = "3.7.0"
@@ -57,13 +58,17 @@ hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt"
 hilt-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
 hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hilt-navigation-compose" }
 
-# Ktor
+# Ktor.
 ktor-bom =  { module = "io.ktor:ktor-bom", version.ref = "ktor" }
 ktor-client-core = { module = "io.ktor:ktor-client-core" }
 ktor-client-cio = { module = "io.ktor:ktor-client-cio" }
 ktor-client-logging = { module = "io.ktor:ktor-client-logging" }
 ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation" }
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json" }
+
+# Coil.
+coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
+coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coil" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -81,6 +86,7 @@ ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 # Build Logic.
 heaven-from-android-application = { id = "heaven.from.android.application" }
 heaven-from-android-library = { id = "heaven.from.android.library" }
+heaven-from-coil = { id = "heaven.from.coil" }
 heaven-from-compose = { id = "heaven.from.compose" }
 heaven-from-hilt = { id = "heaven.from.hilt" }
 heaven-from-kotlin-serialization = { id = "heaven.from.kotlin.serialization" }

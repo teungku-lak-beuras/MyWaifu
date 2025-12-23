@@ -32,6 +32,10 @@ gradlePlugin {
             id = "heaven.from.android.library"
             implementationClass = "AndroidLibraryConventionPlugin"
         }
+        register("CoilComposePlugin") {
+            id = "heaven.from.coil"
+            implementationClass = "CoilConventionPlugin"
+        }
         register("ComposeConventionPlugin") {
             id = "heaven.from.compose"
             implementationClass = "ComposeConventionPlugin"
