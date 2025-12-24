@@ -47,7 +47,7 @@ class NekosBestApiModule {
 
     @Provides
     @Singleton
-    fun createHttpClient(
+    fun provideHttpClient(
         @BaseUrl baseUrl: String,
         @DebugMode debugMode: Boolean,
         engine: HttpClientEngineFactory<CIOEngineConfig>
