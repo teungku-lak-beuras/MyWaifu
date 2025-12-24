@@ -13,7 +13,7 @@ class NekosBestApiDataSource
 constructor(
     private val client: HttpClient
 ) {
-    suspend fun getWaifu(amount: Int = 12): NekosBestApiResponse {
+    suspend fun getWaifu(amount: Int): NekosBestApiResponse {
         return client.get(
             urlString = "waifu"
         ) {
