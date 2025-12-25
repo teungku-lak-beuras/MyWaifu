@@ -13,12 +13,12 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class NekosBestRepository
+class NekosBestApiRepository
 @Inject
 constructor(
     private val nekosBestApiDataSource: NekosBestApiDataSource
 ) {
-    fun getNetworkWaifu(amount: Int): Flow<ApiState<List<WaifuModelV1>>> = flow {
+    fun getWaifu(amount: Int): Flow<ApiState<List<WaifuModelV1>>> = flow {
         emit(ApiState.Loading)
 
         try {
