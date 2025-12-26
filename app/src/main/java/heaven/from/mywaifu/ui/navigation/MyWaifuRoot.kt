@@ -18,7 +18,7 @@ import androidx.navigation3.ui.NavDisplay
 import androidx.savedstate.serialization.SavedStateConfiguration
 import heaven.from.mywaifu.ui.screen.AboutScreen
 import heaven.from.mywaifu.ui.screen.HelpScreen
-import heaven.from.mywaifu.ui.screen.HomeScreen
+import heaven.from.mywaifu.ui.screen.HomeRoute
 import heaven.from.mywaifu.ui.screen.SettingsScreen
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
@@ -30,8 +30,8 @@ fun MyWaifuRoot() {
             serializersModule = SerializersModule {
                 polymorphic(NavKey::class) {
                     subclass(
-                        MyWaifuRoutes.HomeScreen::class,
-                        MyWaifuRoutes.HomeScreen.serializer()
+                        MyWaifuRoutes.HomeRoute::class,
+                        MyWaifuRoutes.HomeRoute.serializer()
                     )
                     subclass(
                         MyWaifuRoutes.HelpScreen::class,
@@ -48,7 +48,7 @@ fun MyWaifuRoot() {
                 }
             }
         },
-        MyWaifuRoutes.HomeScreen
+        MyWaifuRoutes.HomeRoute
     )
     val durationMilliseconds = 200
 
@@ -76,9 +76,9 @@ fun MyWaifuRoot() {
         },
         entryProvider = { key ->
             when (key) {
-                is MyWaifuRoutes.HomeScreen -> {
+                is MyWaifuRoutes.HomeRoute -> {
                     NavEntry(key) {
-                        HomeScreen(
+                        HomeRoute(
                             helpCallback = {
                                 backStack.add(MyWaifuRoutes.HelpScreen)
                             },

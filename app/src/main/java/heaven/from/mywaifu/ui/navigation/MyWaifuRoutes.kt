@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 sealed interface MyWaifuRoutes : NavKey {
     @Serializable
-    data object HomeScreen : MyWaifuRoutes, NavKey
+    data object HomeRoute : MyWaifuRoutes, NavKey
 
     @Serializable
     data object HelpScreen : MyWaifuRoutes, NavKey
