@@ -1,7 +1,5 @@
 package heaven.from.mywaifu.ui.navigation
 
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -22,6 +20,10 @@ import heaven.from.mywaifu.ui.screen.HomeRoute
 import heaven.from.mywaifu.ui.screen.SettingsScreen
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
+
+private const val durationMilliseconds = 300
+private const val delayMilliseconds = 100
+private const val opacityAlpha = 0.4f
 
 @Composable
 fun MyWaifuRoot() {
@@ -50,7 +52,6 @@ fun MyWaifuRoot() {
         },
         MyWaifuRoutes.HomeRoute
     )
-    val durationMilliseconds = 200
 
     NavDisplay(
         backStack = backStack,
@@ -60,18 +61,40 @@ fun MyWaifuRoot() {
         ),
         transitionSpec = {
             slideInHorizontally(
-                animationSpec = tween(durationMilliseconds),
+                animationSpec = tween(
+                    durationMillis = durationMilliseconds + delayMilliseconds,
+                ),
                 initialOffsetX = { it }
-            ) + fadeIn(
-                animationSpec = tween(durationMilliseconds)
-            ) togetherWith ExitTransition.KeepUntilTransitionsFinished
+            ) togetherWith slideOutHorizontally(
+                animationSpec = tween(
+                    durationMillis = durationMilliseconds,
+                    delayMillis = delayMilliseconds
+                ),
+                targetOffsetX = { -it / 3 }
+            ) + fadeOut(
+                animationSpec = tween(
+                    durationMillis = durationMilliseconds + delayMilliseconds,
+                ),
+                targetAlpha = opacityAlpha
+            )
         },
         popTransitionSpec = {
-            EnterTransition.None togetherWith slideOutHorizontally(
-                animationSpec = tween(durationMilliseconds),
+            slideInHorizontally(
+                animationSpec = tween(
+                    durationMillis = durationMilliseconds,
+                    delayMillis = delayMilliseconds
+                ),
+                initialOffsetX = { -it / 3 }
+            ) + fadeIn(
+                animationSpec = tween(
+                    durationMillis = durationMilliseconds + delayMilliseconds,
+                ),
+                initialAlpha = opacityAlpha
+            ) togetherWith slideOutHorizontally(
+                animationSpec = tween(
+                    durationMillis = durationMilliseconds + delayMilliseconds,
+                ),
                 targetOffsetX = { it }
-            ) + fadeOut(
-                animationSpec = tween(durationMilliseconds)
             )
         },
         entryProvider = { key ->
