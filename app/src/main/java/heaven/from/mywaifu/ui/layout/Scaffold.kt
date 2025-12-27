@@ -36,14 +36,6 @@ fun MyWaifuScaffold(
         color = MaterialTheme.colorScheme.surface
     ) {
         Box(
-            modifier = Modifier
-                .onGloballyPositioned { layoutCoordinates ->
-                    spacerHeight = layoutCoordinates.size.height
-            }
-        ) {
-            topAppBar.invoke()
-        }
-        Box(
             modifier = Modifier.fillMaxSize()
         ) {
             content.invoke(
@@ -53,6 +45,14 @@ fun MyWaifuScaffold(
                     }
                 )
             )
+        }
+        Box(
+            modifier = Modifier
+                .onGloballyPositioned { layoutCoordinates ->
+                    spacerHeight = layoutCoordinates.size.height
+                }
+        ) {
+            topAppBar.invoke()
         }
     }
 }

@@ -50,6 +50,7 @@ import heaven.from.mywaifu.ui.component.MyWaifuTopAppBarMenu
 import heaven.from.mywaifu.ui.constant.cornerSmall
 import heaven.from.mywaifu.ui.layout.MyWaifuScaffold
 import heaven.from.mywaifu.ui.view_model.HomeViewModel
+import heaven.from.mywaifu.utility.plus
 import heaven.from.repository.state.ApiState
 
 @Composable
@@ -230,13 +231,15 @@ fun ErrorItem() {
 
 @Composable
 fun Content(
-    modifier: Modifier,
+    paddingValues: PaddingValues,
     waifu: ApiState<List<WaifuModelV1>>
 ) {
+    val modifier = Modifier.fillMaxSize()
+
     when (waifu) {
         is ApiState.Loading -> {
             Column(
-                modifier = modifier,
+                modifier = modifier.padding(paddingValues),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
@@ -247,7 +250,7 @@ fun Content(
             LazyVerticalGrid(
                 modifier = modifier,
                 columns = GridCells.Adaptive(128.dp),
-                contentPadding = PaddingValues(
+                contentPadding = paddingValues + PaddingValues(
                     top = 16.dp,
                     start = 16.dp,
                     end = 16.dp,
@@ -265,7 +268,7 @@ fun Content(
         }
         is ApiState.Error -> {
             Column(
-                modifier = modifier,
+                modifier = modifier.padding(paddingValues),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
@@ -324,9 +327,7 @@ fun HomeScreen(
         }
     ) { paddingValues ->
         Content(
-            modifier = Modifier
-                .padding(paddingValues)
-                .fillMaxSize(),
+            paddingValues = paddingValues,
             waifu = waifu
         )
     }
