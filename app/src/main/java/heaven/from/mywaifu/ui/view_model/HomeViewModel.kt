@@ -24,7 +24,7 @@ constructor(
         getWaifu()
     }
 
-    fun getWaifu(amount: Int = 15) = viewModelScope.launch {
+    fun getWaifu(amount: Int = 16) = viewModelScope.launch {
         repository.getNetworkWaifu(amount = amount).collect { value ->
             when (value) {
                 is ApiState.Loading -> {

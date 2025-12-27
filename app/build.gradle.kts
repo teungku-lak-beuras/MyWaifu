@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.heaven.from.android.application)
+    alias(libs.plugins.heaven.from.coil)
     alias(libs.plugins.heaven.from.compose)
     alias(libs.plugins.heaven.from.hilt)
     alias(libs.plugins.heaven.from.kotlin.serialization)
@@ -14,6 +15,10 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 
     buildTypes {

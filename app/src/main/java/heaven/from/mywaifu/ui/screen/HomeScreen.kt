@@ -2,15 +2,18 @@ package heaven.from.mywaifu.ui.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.HorizontalDivider
@@ -19,6 +22,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -26,12 +30,19 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import coil3.compose.AsyncImagePainter
+import coil3.compose.LocalPlatformContext
+import coil3.compose.rememberAsyncImagePainter
+import coil3.compose.rememberConstraintsSizeResolver
+import coil3.request.ImageRequest
 import heaven.from.model.WaifuModelV1
 import heaven.from.mywaifu.R
 import heaven.from.mywaifu.ui.component.MyWaifuTopAppBar
@@ -123,20 +134,60 @@ fun LoadingItem() {
 fun SuccessItem(
     waifu: WaifuModelV1
 ) {
-    val shape = RoundedCornerShape(16.dp)
+    val sizeResolver = rememberConstraintsSizeResolver()
+    val imagePainter = rememberAsyncImagePainter(
+        model = ImageRequest
+            .Builder(LocalPlatformContext.current)
+            .data(waifu.url)
+            .build()
+    )
+    val state by imagePainter.state.collectAsState()
+    val imageModifier = Modifier
+        .height(256.dp)
+        .fillMaxWidth()
 
     Surface(
-        modifier = Modifier.clip(shape = shape),
+        modifier = Modifier.clip(shape = cornerSmall),
         color = MaterialTheme.colorScheme.primaryContainer
     ) {
         Column() {
+            when (state) {
+                is AsyncImagePainter.State.Empty,
+                is AsyncImagePainter.State.Loading -> {
+                    Column(
+                        modifier = imageModifier,
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        LoadingItem()
+                        CircularProgressIndicator()
+                    }
+                }
+                is AsyncImagePainter.State.Success -> {
+                    Image(
+                        modifier = imageModifier.then(sizeResolver),
+                        painter = imagePainter,
+                        contentDescription = "Waifu artist's name: ${waifu.artistName}",
+                        contentScale = ContentScale.Crop
+                    )
+                }
+                is AsyncImagePainter.State.Error -> {
+                    Box(
+                        modifier = imageModifier,
+                        contentAlignment = Alignment.Center
+                    ) {
+                        ErrorItem()
+                    }
+                }
+            }
             Text(
                 modifier = Modifier.padding(
                     top = 16.dp,
                     start = 16.dp,
                     end = 16.dp
                 ),
-                text = "Waifu artist's name: ${waifu.artistName}"
+                style = MaterialTheme.typography.titleSmall,
+                text = waifu.artistName
             )
             Text(
                 modifier = Modifier.padding(
@@ -144,14 +195,19 @@ fun SuccessItem(
                     start = 16.dp,
                     end = 16.dp
                 ),
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
                 text = "Waifu taken from: ${waifu.sourceUrl}"
             )
             Text(
                 modifier = Modifier.padding(
                     top = 16.dp,
                     start = 16.dp,
-                    end = 16.dp
+                    end = 16.dp,
+                    bottom = 16.dp
                 ),
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
                 text = "Waifu image: ${waifu.url}"
             )
         }

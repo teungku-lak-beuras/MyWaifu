@@ -48,15 +48,15 @@ val MyWaifuTypography = Typography(
     ),
     bodySmall = TextStyle(
         fontFamily = fontFamily,
-        fontSize = 11.sp
+        fontSize = 12.sp
     ),
     bodyMedium = TextStyle(
         fontFamily = fontFamily,
-        fontSize = 12.sp
+        fontSize = 14.sp
     ),
     bodyLarge = TextStyle(
         fontFamily = fontFamily,
-        fontSize = 14.sp
+        fontSize = 16.sp
     ),
     labelSmall = TextStyle(
         fontFamily = fontFamily,
