@@ -1,6 +1,5 @@
 package heaven.from.mywaifu.ui.screen
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -45,19 +44,16 @@ import heaven.from.repository.state.ApiState
 @Composable
 fun Dropdown(
     expanded: Boolean,
-    onDismisRequest: () -> Unit,
+    onDismissRequest: () -> Unit,
     helpCallback: () -> Unit,
     settingsCallback: () -> Unit,
     aboutCallback: () -> Unit
 ) {
     DropdownMenu(
-        border = BorderStroke(
-            width = 1.dp,
-            color = MaterialTheme.colorScheme.outline
-        ),
+        containerColor = MaterialTheme.colorScheme.tertiaryContainer,
         shape = cornerSmall,
         expanded = expanded,
-        onDismissRequest = onDismisRequest
+        onDismissRequest = onDismissRequest
     ) {
         DropdownMenuItem(
             trailingIcon = {
@@ -252,10 +248,19 @@ fun HomeScreen(
                         )
                         Dropdown(
                             expanded = dropdownExpanded,
-                            onDismisRequest = { dropdownExpanded = false },
-                            helpCallback = helpCallback,
-                            settingsCallback = settingsCallback,
-                            aboutCallback = aboutCallback
+                            onDismissRequest = { dropdownExpanded = false },
+                            helpCallback = {
+                                dropdownExpanded = false
+                                helpCallback.invoke()
+                            },
+                            settingsCallback = {
+                                dropdownExpanded = false
+                                settingsCallback.invoke()
+                            },
+                            aboutCallback = {
+                                dropdownExpanded = false
+                                aboutCallback.invoke()
+                            }
                         )
                     }
                 }
