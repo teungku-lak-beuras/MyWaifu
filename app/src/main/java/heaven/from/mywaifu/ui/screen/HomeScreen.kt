@@ -45,11 +45,16 @@ import coil3.compose.rememberConstraintsSizeResolver
 import coil3.request.ImageRequest
 import heaven.from.model.WaifuModelV1
 import heaven.from.mywaifu.R
-import heaven.from.mywaifu.ui.component.MyWaifuTopAppBar
+import heaven.from.mywaifu.ui.component.MyWaifuTopAppBarLandscape
 import heaven.from.mywaifu.ui.component.MyWaifuTopAppBarMenu
+import heaven.from.mywaifu.ui.component.MyWaifuTopAppBarPortrait
 import heaven.from.mywaifu.ui.constant.cornerSmall
 import heaven.from.mywaifu.ui.layout.MyWaifuScaffold
+import heaven.from.mywaifu.ui.layout.MyWaifuSwitchingTopAppBar
 import heaven.from.mywaifu.ui.view_model.HomeViewModel
+import heaven.from.mywaifu.utility.LocalWindowSize
+import heaven.from.mywaifu.utility.PreviewWrapper
+import heaven.from.mywaifu.utility.WindowSize
 import heaven.from.mywaifu.utility.plus
 import heaven.from.repository.state.ApiState
 
@@ -232,7 +237,7 @@ fun ErrorItem() {
 @Composable
 fun Content(
     paddingValues: PaddingValues,
-    waifu: ApiState<List<WaifuModelV1>>
+    waifu: ApiState<List<WaifuModelV1>>,
 ) {
     val modifier = Modifier.fillMaxSize()
 
@@ -285,51 +290,91 @@ fun HomeScreen(
     aboutCallback: () -> Unit,
     waifu: ApiState<List<WaifuModelV1>>
 ) {
+    val windowSizeClass = LocalWindowSize.current
+    var topAppBarExpanded by remember { mutableStateOf(true) }
     var dropdownExpanded by remember { mutableStateOf(false) }
 
-    MyWaifuScaffold(
-        topAppBar = {
-            MyWaifuTopAppBar(
-                title = stringResource(R.string.app_name),
-                notificationCallback = {},
-                searchCallback = { text -> },
-                burgerContent = {
-                    MyWaifuTopAppBarMenu(
-                        modifier = Modifier.padding(end = 16.dp),
-                        onClickCallback = {
-                            dropdownExpanded = true
-                        }
-                    ) {
-                        Icon(
-                            modifier = Modifier.padding(16.dp),
-                            contentDescription = "More menu",
-                            painter = painterResource(R.drawable.menu_burger)
-                        )
-                        Dropdown(
-                            expanded = dropdownExpanded,
-                            onDismissRequest = { dropdownExpanded = false },
-                            helpCallback = {
-                                dropdownExpanded = false
-                                helpCallback.invoke()
-                            },
-                            settingsCallback = {
-                                dropdownExpanded = false
-                                settingsCallback.invoke()
-                            },
-                            aboutCallback = {
-                                dropdownExpanded = false
-                                aboutCallback.invoke()
-                            }
-                        )
-                    }
+    val burgerContent = @Composable {
+        MyWaifuTopAppBarMenu(
+            modifier = Modifier.padding(end = 16.dp),
+            onClickCallback = {
+                dropdownExpanded = true
+            }
+        ) {
+            Icon(
+                modifier = Modifier.padding(16.dp),
+                contentDescription = "More menu",
+                painter = painterResource(R.drawable.menu_burger)
+            )
+            Dropdown(
+                expanded = dropdownExpanded,
+                onDismissRequest = { dropdownExpanded = false },
+                helpCallback = {
+                    dropdownExpanded = false
+                    helpCallback.invoke()
+                },
+                settingsCallback = {
+                    dropdownExpanded = false
+                    settingsCallback.invoke()
+                },
+                aboutCallback = {
+                    dropdownExpanded = false
+                    aboutCallback.invoke()
                 }
             )
         }
-    ) { paddingValues ->
-        Content(
-            paddingValues = paddingValues,
-            waifu = waifu
-        )
+    }
+
+    when (windowSizeClass) {
+        WindowSize.Medium -> {
+            MyWaifuScaffold(
+                topAppBar = {
+                    MyWaifuSwitchingTopAppBar(
+                        expanded = topAppBarExpanded,
+                        expandedTopAppBar = {
+                            MyWaifuTopAppBarLandscape(
+                                title = stringResource(R.string.app_name),
+                                collapseCallback = { topAppBarExpanded = false },
+                                notificationCallback = {},
+                                searchCallback = { text -> },
+                                burgerContent = burgerContent
+                            )
+                        },
+                        collapsedTopAppBar = {
+                            MyWaifuTopAppBarLandscape(
+                                expandCallback = { topAppBarExpanded = true },
+                                notificationCallback = {},
+                                searchCallback = { string -> },
+                                burgerContent = burgerContent
+                            )
+                        }
+                    )
+                }
+            ) { paddingValues ->
+                Content(
+                    paddingValues = paddingValues,
+                    waifu = waifu
+                )
+            }
+        }
+
+        else -> {
+            MyWaifuScaffold(
+                topAppBar = {
+                    MyWaifuTopAppBarPortrait(
+                        title = stringResource(R.string.app_name),
+                        notificationCallback = {},
+                        searchCallback = { text -> },
+                        burgerContent = burgerContent
+                    )
+                }
+            ) { paddingValues ->
+                Content(
+                    paddingValues = paddingValues,
+                    waifu = waifu
+                )
+            }
+        }
     }
 }
 
@@ -351,25 +396,57 @@ fun HomeRoute(
 @Preview
 @Composable
 fun HomeScreenPreview1() {
-    HomeScreen(
-        helpCallback = {},
-        settingsCallback = {},
-        aboutCallback = {},
-        waifu = ApiState.Success(
-            data = listOf(
-                WaifuModelV1(
-                    artistName = "Yagen",
-                    artistHref = "https://www.pixiv.net/en/users/39846570",
-                    sourceUrl = "https://www.pixiv.net/en/artworks/128662564",
-                    url = "https://nekos.best/api/v2/waifu/5cd32e1d-351f-43c3-93ac-9f9ac51d58b1.png"
-                ),
-                WaifuModelV1(
-                    artistName = "Yagen",
-                    artistHref = "https://www.pixiv.net/en/users/39846570",
-                    sourceUrl = "https://www.pixiv.net/en/artworks/128662564",
-                    url = "https://nekos.best/api/v2/waifu/5cd32e1d-351f-43c3-93ac-9f9ac51d58b1.png"
+    PreviewWrapper() {
+        HomeScreen(
+            helpCallback = {},
+            settingsCallback = {},
+            aboutCallback = {},
+            waifu = ApiState.Success(
+                data = listOf(
+                    WaifuModelV1(
+                        artistName = "Yagen",
+                        artistHref = "https://www.pixiv.net/en/users/39846570",
+                        sourceUrl = "https://www.pixiv.net/en/artworks/128662564",
+                        url = "https://nekos.best/api/v2/waifu/5cd32e1d-351f-43c3-93ac-9f9ac51d58b1.png"
+                    ),
+                    WaifuModelV1(
+                        artistName = "Yagen",
+                        artistHref = "https://www.pixiv.net/en/users/39846570",
+                        sourceUrl = "https://www.pixiv.net/en/artworks/128662564",
+                        url = "https://nekos.best/api/v2/waifu/5cd32e1d-351f-43c3-93ac-9f9ac51d58b1.png"
+                    )
                 )
             )
         )
-    )
+    }
+}
+
+@Preview(device = "spec:parent=pixel_5,orientation=landscape")
+@Composable
+fun HomeScreenPreview2() {
+    PreviewWrapper(
+        windowSize = WindowSize.Medium
+    ) {
+        HomeScreen(
+            helpCallback = {},
+            settingsCallback = {},
+            aboutCallback = {},
+            waifu = ApiState.Success(
+                data = listOf(
+                    WaifuModelV1(
+                        artistName = "Yagen",
+                        artistHref = "https://www.pixiv.net/en/users/39846570",
+                        sourceUrl = "https://www.pixiv.net/en/artworks/128662564",
+                        url = "https://nekos.best/api/v2/waifu/5cd32e1d-351f-43c3-93ac-9f9ac51d58b1.png"
+                    ),
+                    WaifuModelV1(
+                        artistName = "Yagen",
+                        artistHref = "https://www.pixiv.net/en/users/39846570",
+                        sourceUrl = "https://www.pixiv.net/en/artworks/128662564",
+                        url = "https://nekos.best/api/v2/waifu/5cd32e1d-351f-43c3-93ac-9f9ac51d58b1.png"
+                    )
+                )
+            )
+        )
+    }
 }

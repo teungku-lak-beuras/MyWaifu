@@ -7,7 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import heaven.from.mywaifu.R
-import heaven.from.mywaifu.ui.component.MyWaifuTopAppBar
+import heaven.from.mywaifu.ui.component.MyWaifuTopAppBarPortrait
 import heaven.from.mywaifu.ui.layout.MyWaifuScaffold
 
 @Composable
@@ -16,7 +16,7 @@ fun SettingsScreen(
 ) {
     MyWaifuScaffold(
         topAppBar = {
-            MyWaifuTopAppBar(
+            MyWaifuTopAppBarPortrait(
                 title = stringResource(R.string.settings),
                 popCallback = popCallback,
                 notificationCallback = {}

@@ -21,7 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
-import heaven.from.mywaifu.ui.component.MyWaifuTopAppBar
+import heaven.from.mywaifu.ui.component.MyWaifuTopAppBarPortrait
 
 @Composable
 fun MyWaifuScaffold(
@@ -32,14 +32,13 @@ fun MyWaifuScaffold(
 
     Surface(
         modifier = Modifier
+            .windowInsetsPadding(WindowInsets.displayCutout)
             .windowInsetsPadding(WindowInsets.statusBars)
             .windowInsetsPadding(WindowInsets.navigationBars),
         color = MaterialTheme.colorScheme.surface
     ) {
         Box(
-            modifier = Modifier
-                .windowInsetsPadding(WindowInsets.displayCutout)
-                .fillMaxSize()
+            modifier = Modifier.fillMaxSize()
         ) {
             content.invoke(
                 PaddingValues(
@@ -51,7 +50,6 @@ fun MyWaifuScaffold(
         }
         Box(
             modifier = Modifier
-                .windowInsetsPadding(WindowInsets.displayCutout)
                 .onGloballyPositioned { layoutCoordinates ->
                     spacerHeight = layoutCoordinates.size.height
                 }
@@ -66,7 +64,7 @@ fun MyWaifuScaffold(
 fun MyWaifuScaffoldPreview1() {
     MyWaifuScaffold(
         topAppBar = {
-            MyWaifuTopAppBar(
+            MyWaifuTopAppBarPortrait(
                 title = "Administrator",
                 notificationCallback = {},
                 searchCallback = {}
