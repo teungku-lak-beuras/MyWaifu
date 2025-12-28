@@ -3,6 +3,7 @@ package heaven.from.mywaifu.ui.layout
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.displayCutout
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
@@ -36,7 +37,9 @@ fun MyWaifuScaffold(
         color = MaterialTheme.colorScheme.surface
     ) {
         Box(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .windowInsetsPadding(WindowInsets.displayCutout)
+                .fillMaxSize()
         ) {
             content.invoke(
                 PaddingValues(
@@ -48,6 +51,7 @@ fun MyWaifuScaffold(
         }
         Box(
             modifier = Modifier
+                .windowInsetsPadding(WindowInsets.displayCutout)
                 .onGloballyPositioned { layoutCoordinates ->
                     spacerHeight = layoutCoordinates.size.height
                 }
