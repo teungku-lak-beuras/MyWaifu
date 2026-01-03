@@ -1,3 +1,7 @@
+~~
+This repository is archived and the code is migrated to [MyWaifuMP](https://github.com/teungku-lak-beuras/MyWaifuMP). Thank you for your understanding and have a bright day~ :)
+~~
+
 # Hi
 
 This is MyWaifu Android project.
